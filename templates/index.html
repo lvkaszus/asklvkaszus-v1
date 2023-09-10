@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Ask @lvkaszus!</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      @import url("{{ url_for('static', filename='fonts/Fira_Code-6.2/fira_code.css') }}");
+
+      body {
+        background-color: black;
+        color: white;
+        text-align: center;
+        font-family: 'Fira Code';
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      b {
+        font-weight: 600;
+      }
+
+      #page_title {
+        font-size: 26px;
+        font-weight: 500;
+      }
+
+      #page_description {
+        font-size: 16px;
+        font-weight: 300;
+      }
+
+      form {
+        margin-top: 20px;
+      }
+
+      input[type="text"], textarea {
+        display: block;
+        margin: 10px 0;
+        padding: 5px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
+      input[type="submit"] {
+        margin: 10px 0;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        font-size: 20px;
+        color: #fff;
+        background-color: #006203;
+        cursor: pointer;
+        box-sizing: border-box;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #007c04;
+      }
+
+      #pytania {
+        margin-top: 50px;
+      }
+
+      #questions_info {
+        margin: 10px 0 25px 0;
+        font-weight: 300;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #202020;
+        border-radius: 5px;
+        font-size: 20px;
+        font-weight: 300;
+        box-sizing: border-box;
+        text-align: left;
+        word-wrap: break-word;
+      }
+
+      .question {
+        color: rgb(255, 200, 0);
+        font-size: 20px;
+      }
+
+      .unanswered {
+        color: rgb(255, 100, 100);
+        font-size: 20px;
+      }
+
+      .answered {
+        color: rgb(100, 255, 100);
+        font-size: 20px;
+      }
+
+      #question_datetime {
+        font-size: 14px;
+        margin: 10px 0 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="page_title">Send @lvkaszus anonymous question! 😁</h1>
+    <form action="/" method="post">
+        <p id="page_description">Your question:</p>
+        <input type="text" name="question" placeholder="Click here and write something!">
+        <input type="submit" value="Send anonymous question">
+    </form>
+    {% if questions %}
+        <div id="pytania">
+          <h2 id="questions">Questions:</h2>
+          <p id="questions_info">Scroll down to see older questions!</p>
+          <ul>
+            {% for question in questions %}
+              <li><b>Asked Question: <span class="question">{{ question[1] }}</span></b>
+              <br>
+              {% if question[2] != "TODO" %}
+                <b>@lvkaszus Answer: <span class="answered">{{ question[2] }}</span></b>
+              {% else %}
+                <b>@lvkaszus Answer: <span class="unanswered">@lvkaszus hasn't answered that question yet!</span></b>
+              {% endif %}
+              <br>
+              <p id="question_datetime"><b>Date and Time sent:</b> {{ question[0].strftime("%Y-%m-%d %H:%M:%S") }}</p>
+              </li>
+              {% endfor %}
+          </ul>
+        </div>
+    {% else %}
+        <p>There are no questions yet. Write them! 😁</p>
+    {% endif %}
+</body>
+</html>
